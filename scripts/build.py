@@ -107,18 +107,15 @@ def footer_page_links(pages):
     )
 
 
-# Free text - admin tu viet trong tab Cai dat website (website.footer_contact_html), RAW
-# HTML khong escape (giong content bai viet) de duoc phep chen the <a href="mailto:...">,
-# <a href="tel:...">... Gia tri mac dinh (neu field chua duoc set trong website.json) giu
-# dung noi dung cung <li> nhu ban goc, KHONG hardcode trong template nua.
+# Free text - admin soan bang TinyMCE trong tab Cai dat website (website.footer_contact_html),
+# RAW HTML khong escape (giong content bai viet). TinyMCE xuat moi dong thanh <p>, nen khung
+# chua la <div class="footer-contact-list"> (KHONG phai <ul>) - xem CSS ".footer-contact-list"
+# trong tung template. Gia tri mac dinh (neu field chua duoc set) dung <p>, khop dung khung.
 DEFAULT_FOOTER_CONTACT = (
-    '            <li>Email: <a href="mailto:contact@trithucworld.com">contact@trithucworld.com</a>\n'
-    '            </li>\n'
-    '            <li>Hotline: <a href="tel:0964074043">0964 074 043</a>\n'
-    '            </li>\n'
-    '            <li>Zalo: <a href="https://zalo.me/0964074043">Quang Huy</a>\n'
-    '            </li>\n'
-    '            <li>Địa chỉ: Rinky Home, 280/7 Trưng Nữ Vương, Đà Nẵng, Việt Nam</li>'
+    '            <p>Email: <a href="mailto:contact@trithucworld.com">contact@trithucworld.com</a></p>\n'
+    '            <p>Hotline: <a href="tel:0964074043">0964 074 043</a></p>\n'
+    '            <p>Zalo: <a href="https://zalo.me/0964074043">Quang Huy</a></p>\n'
+    '            <p>Địa chỉ: Rinky Home, 280/7 Trưng Nữ Vương, Đà Nẵng, Việt Nam</p>'
 )
 
 

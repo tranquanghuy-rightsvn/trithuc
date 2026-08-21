@@ -205,9 +205,20 @@ nut sinh ra trong bang (danh sach bai/danh muc/trang/user) cung truyen `this` tu
 chuoi HTML dung `.map()`. **Xoa** (bai viet/danh muc/trang/user) da co san `confirm()` truoc
 khi goi server, giu nguyen — chi them spinner cho phan goi server sau khi da confirm.
 
+## Boot: stale-while-revalidate qua localStorage (da lam, gas-backend-patterns.md muc 9b)
+
+Bug UX that da gap: moi lan tai lai trang Admin, man hinh Dang nhap hien ra ~1-3s (thoi gian
+cho round-trip `boot()`) roi moi vao duoc Admin, du token van con hop le - gay cam giac
+"nhap nhay". Sua: `bootApp()` trong `gas/js.html` cache nguyen ket qua `boot()` vao
+`localStorage` (`LS_BOOT_CACHE_KEY`) — lan tai sau hien Admin **NGAY** tu cache (0 giay cam
+nhan), roi goi lai `boot()` NGAM (`revalidateBootInBackground_()`) de xac thuc token +
+lam moi du lieu; token het han thi moi dua ve man Dang nhap that. Lan dau chua co cache thi
+hien `#boot-loading` (vong xoay trung tinh) thay vi nhap nhay man Dang nhap trong luc cho.
+**Chua lam** (co the them neu can, xem `gas-backend-patterns.md` muc 9c/9d): cache tung
+bai/trang rieng theo `updated_at`, prefetch ngam danh sach bai khi mo Admin.
+
 ## Chua lam (co the them sau, tham khao `gas-backend-patterns.md` muc 9)
 
-De giu pham vi ban dau gon, `gas/js.html` **chua** cai dat cac toi uu toc do CMS (boot-once
-+ cache `localStorage` theo `updated_at`, prefetch ngam, gioi han so lan nhap sai OTP da co
-nhung chua co UI quan ly user rieng). Cac pattern nay deu da mo ta chi tiet trong skill,
-them dan khi thuc te can (vd editor phan nan CMS cham).
+De giu pham vi ban dau gon, `gas/js.html` **chua** cai dat prefetch ngam danh sach bai/trang,
+gioi han so lan nhap sai OTP da co nhung chua co UI quan ly rieng. Cac pattern nay deu da mo
+ta chi tiet trong skill, them dan khi thuc te can (vd editor phan nan CMS cham).
