@@ -56,6 +56,16 @@ Cloudflare Workers + Static Assets (wrangler deploy trong CI - xem wrangler.toml
 Xuat `image/webp` qua `canvas.toBlob`/`toDataURL` — can trinh duyet ho tro webp o canvas
 (Chrome/Edge/Firefox on; Safari cu co the thieu, chua co fallback PNG tu dong o ban nay).
 
+**Bug that da gap + da sua (`gas/js.html`)**: anh chen trong content dung `src` TUONG DOI
+(dung cho site that, vd `images/posts/72/1/xxx-720.webp`) — nhung TinyMCE chay TRONG trang
+GAS (origin khac han site that), nen src tuong doi khong resolve duoc, anh "bien mat ngay
+tuc thi" khi vua upload xong (swap tu blob: tam sang src that bi vo). Sua theo dung
+`gas-backend-patterns.md` muc 11: `boot()` tra them `github: {owner, repo, branch}` (khong
+phai secret), client dung de hien ANH BANG URL TUYET DOI
+(`raw.githubusercontent.com/.../html/...`) trong luc soan (ca khi mo bai cu de sua lan anh
+vua chen moi), roi tu doi lai thanh tuong doi ngay truoc khi goi `savePost` (xem
+`toAbsoluteImageSrcs_`/`toRelativeImageSrcs_`).
+
 ## Khac biet co chu dich so voi ban goc (cai tien, khong phai loi)
 
 1. **`data/posts.json` tach thanh index nhe + `data/posts/<id>.json` chua content** — thay
