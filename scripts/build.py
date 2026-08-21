@@ -558,7 +558,11 @@ def build_sitemap(posts, pages, website):
     for c in website.get("categories", []):
         parts.append("  <url>\n    <loc>%s%s</loc>\n    <changefreq>yearly</changefreq>\n    <priority>0.7</priority>\n  </url>" % (domain, c["url"]))
     for p in posts:
-        parts.append("  <url>\n    <loc>%s%s</loc>\n    <changefreq>yearly</changefreq>\n    <priority>0.9</priority>\n  </url>" % (domain, p["url"]))
+        # Bai co URL nested legacy (xem LEGACY_NESTED_POST_URLS) thi liet ke thang URL dich -
+        # tranh dua URL se bi 301 redirect vao sitemap (Google khuyen nghi sitemap chi liet
+        # ke URL canonical/dich cuoi cung, khong phai URL trung gian se redirect).
+        loc_url = LEGACY_NESTED_POST_URLS.get(p["url"], p["url"])
+        parts.append("  <url>\n    <loc>%s%s</loc>\n    <changefreq>yearly</changefreq>\n    <priority>0.9</priority>\n  </url>" % (domain, loc_url))
     parts.append("</urlset>")
     (HTML / "sitemap.xml").write_text("\n".join(parts) + "\n", encoding="utf-8")
     print("built html/sitemap.xml (%d bai, %d trang, %d danh muc)" % (len(posts), len(pages), len(website.get("categories", []))))
