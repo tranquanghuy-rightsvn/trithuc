@@ -227,13 +227,30 @@ khong phai doi vong revalidate tiep theo. Dong thoi `revalidateBootInBackground_
 cung tu ve lai 3 bang danh sach (bai/danh muc/trang) sau khi lay du lieu moi - truoc day chi
 cap nhat bien ma khong ve lai gi ca, nen du lieu moi khong bao gio hien len man hinh dang mo.
 
-## Toast popup (thay alert() native)
+## Modal thong bao + xac nhan (thay alert()/confirm() native)
 
-Moi `alert(...)` trong `gas/js.html` da doi thanh `showToast(message, type)` — popup goc
-tren-phai, CSS rieng (xem `css.html`), tu bien mat sau 4s, bam vao de dong ngay. Chi hien
-**thong tin chinh** (khong con tien to kieu "Loi luu bai viet: ..." - mau do/xanh cua toast
-da du de phan biet loi/thanh cong). `type` mac dinh la `"error"` (do); dung `"success"`
-(xanh) cho cac thong bao thanh cong (vd "Đã lưu cài đặt").
+Moi `alert(...)` trong `gas/js.html` da doi thanh `showAlert(message, type)` — **modal giua
+man hinh** (khong phai toast goc man hinh - da thu toast truoc, user muon modal phai bam moi
+dong), dung chung CSS `.confirm-overlay`/`.confirm-box` voi modal xac nhan Xoa. `type` mac
+dinh `"error"` (chu do); `"success"` (chu xanh, in dam) cho thong bao thanh cong. Chi hien
+**thong tin chinh** (khong con tien to kieu "Loi luu bai viet: ...").
+
+Moi `confirm(...)` da doi thanh `showConfirm(message)` — modal 2 nut Hủy/Xóa, tra ve
+`Promise<boolean>`; 4 ham Xoa (`deletePostClick`, `deleteCategoryClick`, `deletePageClick`,
+`deleteUserClick`) da chuyen thanh `async function` de dung duoc `await showConfirm(...)`.
+
+`showSyncAlert(message)` = `showAlert()` + tu dong noi them cau nhac "Bình tĩnh: cần 1 phút
+để mọi thứ được cập nhật trên website!" — goi sau MOI thao tac Luu/Xoa lam website rebuild
+(bai viet, danh muc, trang tinh, cai dat website) de nguoi dung khong hoang mang khi vao site
+thay chua doi ngay. Khong dung cho quan ly nguoi dung (khong lam rebuild).
+
+**Gotcha thuc te da gap luc debug voi user**: `typeof showToast` tra ve `"function"` va
+`doSavePost.toString().includes("showSyncToast")` tra ve `true` deu KHONG chung minh code
+*moi nhat* dang chay - chi chung minh 1 ham CU THE da ton tai tu 1 lan push nao do truoc day.
+Voi 1 file duoc sua nhieu lan lien tiep trong 1 phien, luon kiem tra dung diem call site can
+quan tam (vd goi thang ham trong Console de xem hanh vi thuc te), va nhac nguoi dung **hard
+reload hoac dong han tab** sau moi lan Deploy > New version - F5 thuong khong du vi trang
+GAS chay trong iframe co the giu cache HTML/JS cu.
 
 ## Chua lam (co the them sau, tham khao `gas-backend-patterns.md` muc 9)
 
