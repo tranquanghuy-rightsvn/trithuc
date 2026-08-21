@@ -1,19 +1,5 @@
 [
   {
-    "id": 72,
-    "title": "Lịch sử Kim Tự Tháp",
-    "url": "lich-su-kim-tu-thap.html",
-    "description": "Tóm lược lịch sử Kim Tự Tháp từ mastaba sơ khai, kim tự tháp bậc thang Saqqara đến đỉnh cao Giza và những biến đổi ở các thời kỳ sau.",
-    "keywords": "kim tự tháp, kim tự tháp giza, ai cập cổ đại, pharaoh, saqqara, djoser, sneferu, kiến trúc cổ đại",
-    "category": "5",
-    "image": {
-      "120x80": "images/posts/72/thumbnails/lich-su-kim-tu-thap-120x80.webp",
-      "240x160": "images/posts/72/thumbnails/lich-su-kim-tu-thap-240x160.webp",
-      "480x320": "images/posts/72/thumbnails/lich-su-kim-tu-thap-480x320.webp"
-    },
-    "created_at": "Thứ hai, 11/05/2026 13:38 (GMT+7)"
-  },
-  {
     "id": 71,
     "title": "Du hành thời gian có thật hay không? ",
     "url": "du-hanh-thoi-gian-co-that-hay-khong.html",
