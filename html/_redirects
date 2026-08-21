@@ -1,4 +1,10 @@
 # Cloudflare Pages redirects - chuyen doi tu html/vercel.json cua ban goc (Vercel).
 # Cu phap: <source> <destination> <status>
+
+# wrangler.toml da tat html_handling (giu dung url .html cho SEO - xem ghi chu o do), nen
+# Cloudflare KHONG con tu phuc vu index.html cho "/" nua (khac hanh vi mac dinh) - phai tu
+# khai bao rewrite nay (status 200 = rewrite giu nguyen URL, KHONG phai redirect doi URL).
+/ /index.html 200
+
 /index.html / 301
 /trang-nguyen-thoi-xua.html /lich-su-van-hoa/trang-nguyen-thoi-xua.html 301
