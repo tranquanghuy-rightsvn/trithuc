@@ -217,6 +217,24 @@ hien `#boot-loading` (vong xoay trung tinh) thay vi nhap nhay man Dang nhap tron
 **Chua lam** (co the them neu can, xem `gas-backend-patterns.md` muc 9c/9d): cache tung
 bai/trang rieng theo `updated_at`, prefetch ngam danh sach bai khi mo Admin.
 
+**Bug that da gap + da sua**: cache ban dau CHI duoc ghi lai luc `boot()`/`revalidate` chay,
+khong duoc dong bo ngay sau khi Luu/Xoa - nen "xoa bai xong, tai lai trang ngay sau do van
+thay bai do" (doc tu cache cu trong khoanh khac truoc khi revalidate ngam kip chay xong).
+Sua: them `syncBootCache_()` goi ngay sau MOI thao tac Luu/Xoa lam doi posts/pages/website
+(`doSavePost`, `deletePostClick`, `savePageClick`, `deletePageClick`, `createCategoryClick`,
+`deleteCategoryClick`, `saveWebsiteClick`) de cache luon khop du lieu that ngay lap tuc,
+khong phai doi vong revalidate tiep theo. Dong thoi `revalidateBootInBackground_()` gio
+cung tu ve lai 3 bang danh sach (bai/danh muc/trang) sau khi lay du lieu moi - truoc day chi
+cap nhat bien ma khong ve lai gi ca, nen du lieu moi khong bao gio hien len man hinh dang mo.
+
+## Toast popup (thay alert() native)
+
+Moi `alert(...)` trong `gas/js.html` da doi thanh `showToast(message, type)` — popup goc
+tren-phai, CSS rieng (xem `css.html`), tu bien mat sau 4s, bam vao de dong ngay. Chi hien
+**thong tin chinh** (khong con tien to kieu "Loi luu bai viet: ..." - mau do/xanh cua toast
+da du de phan biet loi/thanh cong). `type` mac dinh la `"error"` (do); dung `"success"`
+(xanh) cho cac thong bao thanh cong (vd "Đã lưu cài đặt").
+
 ## Chua lam (co the them sau, tham khao `gas-backend-patterns.md` muc 9)
 
 De giu pham vi ban dau gon, `gas/js.html` **chua** cai dat prefetch ngam danh sach bai/trang,
