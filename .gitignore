@@ -1,0 +1,8 @@
+# CMS backend deploy qua `clasp push`, khong qua git - xem README.md muc "gas/ va git".
+# Neu ban MUON version-control gas/ trong repo rieng tu (khong public), xoa dong duoi va
+# tu quan ly, nhung dung bao gio commit gas/ vao 1 repo se public/chia se cho khach.
+gas/
+
+.DS_Store
+__pycache__/
+*.pyc

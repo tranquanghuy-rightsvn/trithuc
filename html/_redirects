@@ -1,0 +1,4 @@
+# Cloudflare Pages redirects - chuyen doi tu html/vercel.json cua ban goc (Vercel).
+# Cu phap: <source> <destination> <status>
+/index.html / 301
+/trang-nguyen-thoi-xua.html /lich-su-van-hoa/trang-nguyen-thoi-xua.html 301

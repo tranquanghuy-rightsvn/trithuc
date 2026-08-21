@@ -1,0 +1,51 @@
+{
+  "name": "Tri thức World - Tri thức thế giới tổng hợp",
+  "description": "Tri thức thế giới tổng hợp mới nhất, cập nhật liên tục các kiến thức về công nghệ, lịch sử, khoa học, xã hội, kinh tế, nghệ thuật, khám phá.",
+  "site_name": "Tri thức World",
+  "author": "TrithucWorld",
+  "categories": [
+    {
+      "id": 1,
+      "name": "Công nghệ",
+      "url": "cong-nghe.html"
+    },
+    {
+      "id": 2,
+      "name": "Kinh tế",
+      "url": "kinh-te.html"
+    },
+    {
+      "id": 3,
+      "name": "Xã hội",
+      "url": "xa-hoi.html"
+    },
+    {
+      "id": 4,
+      "name": "Khoa học",
+      "url": "khoa-hoc.html"
+    },
+    {
+      "id": 5,
+      "name": "Lịch sử",
+      "url": "lich-su.html"
+    },
+    {
+      "id": 6,
+      "name": "Nghệ thuật",
+      "url": "nghe-thuat.html"
+    },
+    {
+      "id": 7,
+      "name": "Khám phá",
+      "url": "kham-pha.html"
+    }
+  ],
+  "template": "default",
+  "google_adsense": "1234",
+  "domain_url": "https://trithucworld.com/",
+  "logo": "html/images/logo.png",
+  "thumbnail": "html/images/thumb.webp",
+  "lang": "vi",
+  "google_analytics_code": "<script async src=\"https://www.googletagmanager.com/gtag/js?id=G-BC2VN9KZKX\"></script>\n<script>\n  window.dataLayer = window.dataLayer || [];\n  function gtag(){dataLayer.push(arguments);}\n  gtag('js', new Date());\n\n  gtag('config', 'G-BC2VN9KZKX');\n</script>",
+  "next_category_id": 8
+}

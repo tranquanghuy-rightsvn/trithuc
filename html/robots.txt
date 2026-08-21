@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://trithucworld.com/sitemap.xml
