@@ -992,19 +992,5 @@
       "480x320": "images/posts/1/thumbnails/giai-thich-de-hieu-ve-bitcoin-480x320.webp"
     },
     "created_at": "Thứ ba, 28/10/2025 00:16 (GMT+7)"
-  },
-  {
-    "id": 73,
-    "title": "Test nè 4",
-    "url": "test-ne-4.html",
-    "description": "Test nè 4",
-    "keywords": "a",
-    "category": "1",
-    "image": {
-      "120x80": "images/posts/73/thumbnails/test-ne-4-120x80.webp",
-      "240x160": "images/posts/73/thumbnails/test-ne-4-240x160.webp",
-      "480x320": "images/posts/73/thumbnails/test-ne-4-480x320.webp"
-    },
-    "created_at": "Thứ sáu, 21/08/2026 22:56 (GMT+7)"
   }
 ]
