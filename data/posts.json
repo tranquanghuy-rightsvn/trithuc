@@ -992,5 +992,19 @@
       "480x320": "images/posts/1/thumbnails/giai-thich-de-hieu-ve-bitcoin-480x320.webp"
     },
     "created_at": "Thứ ba, 28/10/2025 00:16 (GMT+7)"
+  },
+  {
+    "id": 72,
+    "title": "alo",
+    "url": "alo.html",
+    "description": "blo",
+    "keywords": "a",
+    "category": "4",
+    "image": {
+      "240x160": "images/posts/72/thumbnails/alo-240x160.webp",
+      "120x80": "images/posts/72/thumbnails/alo-120x80.webp",
+      "480x320": "images/posts/72/thumbnails/alo-480x320.webp"
+    },
+    "created_at": "Thứ sáu, 21/08/2026 23:37 (GMT+7)"
   }
 ]
