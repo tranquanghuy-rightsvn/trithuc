@@ -7,6 +7,10 @@
 / /index.html 200
 
 /index.html / 301
+
+# Bai nay tung nam o duong dan nested 2 cap tren ban goc, Google da index tu do - giu URL cu
+# de khong mat SEO. build.py (build_legacy_nested_post_copies(), xem LEGACY_NESTED_POST_URLS)
+# tao SAN 1 file that o dich (khong phai chi rewrite suong vao 1 URL khong ton tai).
 /trang-nguyen-thoi-xua.html /lich-su-van-hoa/trang-nguyen-thoi-xua.html 301
 
 # "/admin" (khong duoi .html) -> trang trung gian chuyen sang GAS CMS. html/admin/index.html

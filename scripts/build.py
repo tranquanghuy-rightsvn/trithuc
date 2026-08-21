@@ -31,6 +31,7 @@ Chay local de thu: python3 scripts/build.py
 """
 import html as htmllib
 import json
+import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -477,6 +478,39 @@ def build_post_page(post, posts, pages, website):
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(html, encoding="utf-8")
     print("built html/%s" % post["url"])
+    return html
+
+
+# Bai duy nhat con URL nested 2 cap tu ban goc (Google da index tu truoc khi site chuyen
+# sang cau truc phang) - _redirects da co san rewrite "/trang-nguyen-thoi-xua.html ->
+# /lich-su-van-hoa/trang-nguyen-thoi-xua.html" (301) nhung chua bao gio tao file that o dich,
+# nen truy cap bi 404. Khong doi post["url"]/du lieu goc (van build phang binh thuong, cac
+# link noi bo/sitemap van tro ve URL phang do, se duoc redirect) - chi tao THEM 1 ban sao da
+# fix duong dan tuong doi cho dung do sau thu muc moi.
+LEGACY_NESTED_POST_URLS = {
+    "trang-nguyen-thoi-xua.html": "lich-su-van-hoa/trang-nguyen-thoi-xua.html",
+}
+
+
+def build_legacy_nested_post_copies(flat_html_by_url, website):
+    domain = website.get("domain_url", "")
+    for flat_url, nested_url in LEGACY_NESTED_POST_URLS.items():
+        html = flat_html_by_url.get(flat_url)
+        if html is None:
+            continue
+        # Tu tro ve chinh no (og:url/canonical/JSON-LD @id/breadcrumb item) phai la URL that
+        # su (nested), khong phai URL phang - 4 cho giong het nhau, xem POST_URL trong template.
+        html = html.replace(domain + flat_url, domain + nested_url)
+        # Cac duong dan tuong doi (nav category, favicon, anh, breadcrumb hien thi) deu gia
+        # dinh trang nam o goc html/ (xem ghi chu trong ham img()) - quy ve duong dan tuyet
+        # doi tinh tu domain (bat dau bang "/") de dung du o do sau thu muc nao.
+        html = html.replace('href="./', 'href="/')
+        html = html.replace('src="images/', 'src="/images/')
+        html = re.sub(r'href="(?!https?://|/|mailto:|tel:)([^"]+\.html)"', r'href="/\1"', html)
+        out = HTML / nested_url
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(html, encoding="utf-8")
+        print("built html/%s (legacy nested copy of %s)" % (nested_url, flat_url))
 
 
 def build_page(page, pages, website):
@@ -579,8 +613,12 @@ def main():
 
     HTML.mkdir(parents=True, exist_ok=True)
 
+    flat_html_by_url = {}
     for post in posts:
-        build_post_page(post, posts, pages_sorted, website)
+        html = build_post_page(post, posts, pages_sorted, website)
+        if post["url"] in LEGACY_NESTED_POST_URLS:
+            flat_html_by_url[post["url"]] = html
+    build_legacy_nested_post_copies(flat_html_by_url, website)
 
     for page in pages_sorted:
         build_page(page, pages_sorted, website)

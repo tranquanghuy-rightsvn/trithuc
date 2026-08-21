@@ -282,6 +282,36 @@ build (posts + pages + categories + `index.html`/`404.html`), roi xoa moi file `
 khong dung cham/xoa nham `html/admin/index.html` nam trong thu muc con. Da kiem tra idempotent
 (chay 2 lan lien tiep khong tu xoa/sinh them gi).
 
+## URL nested 2 cap hiem gap: `lich-su-van-hoa/trang-nguyen-thoi-xua.html`
+
+1 bai duy nhat tung nam o duong dan nested 2 cap tren ban goc (truoc khi site chuyen sang
+cau truc phang moi bai = 1 file `html/<slug>.html`), Google da index URL do tu truoc. De
+khong mat SEO, `html/_redirects` co san rewrite `/trang-nguyen-thoi-xua.html ->
+/lich-su-van-hoa/trang-nguyen-thoi-xua.html` (301) — nhung ban dau chi co rule rewrite ma
+chua ai tao file that o dich, nen truy cap bi 404 (bug da phat hien va sua trong lan nay).
+
+`build.py` gio co `LEGACY_NESTED_POST_URLS` (dict slug-phang → duong-dan-nested) va
+`build_legacy_nested_post_copies()`, chay sau khi build xong tat ca bai viet phang binh
+thuong. Co che: **khong doi** `post["url"]`/du lieu goc (bai van build phang nhu moi bai
+khac, moi link noi bo — sitemap, related items, homepage/category card — van tro ve URL
+phang, se duoc redirect 301 tu do), chi lay HTML da render cua ban phang roi tao THEM 1 ban
+sao da fix 2 nhom cho khac biet do nam sau hon 1 cap thu muc:
+
+- **Tu tro ve chinh no** (`og:url`, `canonical`, JSON-LD `@id`, breadcrumb JSON-LD `item`)
+  phai doi thanh URL nested that su, khong phai URL phang — vi day la URL that khach truy
+  cap sau khi redirect, dung cho SEO consolidate dung cho (Google da biet URL nay).
+- **Duong dan tuong doi** (nav category `href="./xxx.html"`, favicon `href="./images/..."`,
+  anh bai viet/thumbnail `src="images/..."` khong co `/` dau, breadcrumb hien thi
+  `href="lich-su.html"` khong tien to) deu gia dinh trang nam o goc `html/` (xem ghi chu
+  trong ham `img()`) — voi ban nested, cac duong dan nay duoc quy ve tuyet doi tinh tu domain
+  (them `/` dau) de dung du o do sau thu muc nao, thay vi phai tinh lai `../` cho tung noi
+  goi (nav_categories, img(), template favicon...) — don gian hoa dang ke so voi threading 1
+  tham so "do sau" xuyen suot pipeline render.
+
+Da kiem tra: diff giua 2 file chi khac dung 2 nhom noi tren (khong lech gi khac ngoai y
+muon), va build 2 lan lien tiep khong sinh/doi gi them (idempotent). Neu sau nay phat sinh
+them bai/trang nested tuong tu, chi can them 1 dong vao `LEGACY_NESTED_POST_URLS`.
+
 ## Chua lam (co the them sau, tham khao `gas-backend-patterns.md` muc 9)
 
 De giu pham vi ban dau gon, `gas/js.html` **chua** cai dat prefetch ngam danh sach bai/trang,
