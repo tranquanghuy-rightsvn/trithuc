@@ -992,5 +992,19 @@
       "480x320": "images/posts/1/thumbnails/giai-thich-de-hieu-ve-bitcoin-480x320.webp"
     },
     "created_at": "Thứ ba, 28/10/2025 00:16 (GMT+7)"
+  },
+  {
+    "id": 72,
+    "title": "test nè 3",
+    "url": "test-ne-3.html",
+    "description": "1",
+    "keywords": "alo",
+    "category": "1",
+    "image": {
+      "120x80": "images/posts/72/thumbnails/test-ne-3-120x80.webp",
+      "240x160": "images/posts/72/thumbnails/test-ne-3-240x160.webp",
+      "480x320": "images/posts/72/thumbnails/test-ne-3-480x320.webp"
+    },
+    "created_at": "Thứ sáu, 21/08/2026 22:44 (GMT+7)"
   }
 ]
