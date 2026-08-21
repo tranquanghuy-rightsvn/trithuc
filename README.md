@@ -71,6 +71,12 @@ Xuat `image/webp` qua `canvas.toBlob`/`toDataURL` — can trinh duyet ho tro web
    Pages" nhung Cloudflare da gop san pham nay vao chung Workers, khong con luong tao rieng
    "Pages" tren dashboard nua). `html/vercel.json` → `html/_redirects` (van dung dung quy
    uoc voi Workers Static Assets).
+   **Bay quan trong**: Workers Static Assets mac dinh `html_handling = "auto-trailing-slash"`
+   — TU DONG redirect `/bai-viet.html` → `/bai-viet` (bo duoi `.html`). Site nay da chay lau,
+   Google da index URL co `.html` — doi se anh huong SEO thuc su. Da set
+   `html_handling = "none"` trong `wrangler.toml` de tat han vi nay, giu nguyen URL that
+   nhu file (giong Vercel/Flask ban goc). Kem `not_found_handling = "none"` (site nhieu
+   trang, khong phai SPA — tra 404 that, khong am tham fallback ve `index.html`).
 4. **CI trigger dung 3 file la commit-chot** (`data/posts.json`, `data/pages.json`,
    `data/website.json`) thay vi ca thu muc `data/**` — tranh build o trang thai do dang.
 5. **`ads.txt` quan ly duoc qua CMS** (field `website.ads_txt`, tab Cai dat website trong
@@ -90,6 +96,11 @@ Xuat `image/webp` qua `canvas.toBlob`/`toDataURL` — can trinh duyet ho tro web
    trong `localStorage`, muốn đăng xuất tạm thời thì tự xóa key
    `trithucworld_cms_token` trong DevTools, hoặc yêu cầu thêm lại nút này nếu cần dùng
    trên máy dùng chung.
+7. **"Liên hệ" ở footer quản lý được qua CMS, dạng free text** (`website.footer_contact_html`,
+   textarea trong tab Cài đặt website) — ban đầu là `<ul>` hardcode y hệt trong ca 4
+   template. Ghi RAW khong escape (giống `content` bai viet) vao trong `<ul>` co san, cho
+   phep chen the HTML (`<a href="mailto:...">`...). `build.py` co
+   `DEFAULT_FOOTER_CONTACT` khop dung noi dung cu de khong vo site neu field chua duoc set.
 
 ## Quirk ke thua tu ban goc (CO CHU DICH giu nguyen, khong tu sua, vi user yeu cau match hoan toan)
 

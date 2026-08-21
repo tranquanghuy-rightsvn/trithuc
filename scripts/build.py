@@ -107,6 +107,25 @@ def footer_page_links(pages):
     )
 
 
+# Free text - admin tu viet trong tab Cai dat website (website.footer_contact_html), RAW
+# HTML khong escape (giong content bai viet) de duoc phep chen the <a href="mailto:...">,
+# <a href="tel:...">... Gia tri mac dinh (neu field chua duoc set trong website.json) giu
+# dung noi dung cung <li> nhu ban goc, KHONG hardcode trong template nua.
+DEFAULT_FOOTER_CONTACT = (
+    '            <li>Email: <a href="mailto:contact@trithucworld.com">contact@trithucworld.com</a>\n'
+    '            </li>\n'
+    '            <li>Hotline: <a href="tel:0964074043">0964 074 043</a>\n'
+    '            </li>\n'
+    '            <li>Zalo: <a href="https://zalo.me/0964074043">Quang Huy</a>\n'
+    '            </li>\n'
+    '            <li>Địa chỉ: Rinky Home, 280/7 Trưng Nữ Vương, Đà Nẵng, Việt Nam</li>'
+)
+
+
+def footer_contact(website):
+    return website.get("footer_contact_html") or DEFAULT_FOOTER_CONTACT
+
+
 def article_tags(keywords):
     # KHONG strip tung tag - ban goc cung khong strip ({{ tag }} tren post.keywords.split(','))
     return "\n".join('    <meta property="article:tag" content="%s">' % esc(tag) for tag in (keywords or "").split(","))
@@ -380,6 +399,7 @@ def build_homepage(posts, pages, website):
         "SIDE_POSTS": "\n".join(home_side_post(p) for p in posts[14:20]),
         "CATEGORY_BLOCKS": "\n\n".join(category_blocks),
         "FOOTER_PAGE_LINKS": footer_page_links(pages),
+        "FOOTER_CONTACT": footer_contact(website),
     })
     (HTML / "index.html").write_text(html, encoding="utf-8")
     print("built html/index.html")
@@ -412,6 +432,7 @@ def build_category_page(category, posts, pages, website):
         "MAIN_POSTS": main_posts_html,
         "SIDE_POSTS": "\n".join(cat_side_post(p) for p in cat_posts[12:18]),
         "FOOTER_PAGE_LINKS": footer_page_links(pages),
+        "FOOTER_CONTACT": footer_contact(website),
     })
     out = HTML / category["url"]
     out.parent.mkdir(parents=True, exist_ok=True)
@@ -453,6 +474,7 @@ def build_post_page(post, posts, pages, website):
         "RELATED_ITEMS": "\n".join(related_item(p) for p in related_all[:4]),
         "WEBSITE_DESCRIPTION": esc(website.get("description", "")),
         "FOOTER_PAGE_LINKS": footer_page_links(pages),
+        "FOOTER_CONTACT": footer_contact(website),
     })
     out = HTML / post["url"]
     out.parent.mkdir(parents=True, exist_ok=True)
@@ -484,6 +506,7 @@ def build_page(page, pages, website):
         "MOBILE_NAV_CATEGORIES": nav_categories(categories, mobile=True),
         "WEBSITE_DESCRIPTION": esc(website.get("description", "")),
         "FOOTER_PAGE_LINKS": footer_page_links(pages),
+        "FOOTER_CONTACT": footer_contact(website),
     })
     out = HTML / page["url"]
     out.parent.mkdir(parents=True, exist_ok=True)

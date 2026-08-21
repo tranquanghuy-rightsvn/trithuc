@@ -47,6 +47,7 @@
   "thumbnail": "html/images/thumb.webp",
   "lang": "vi",
   "ads_txt": "google.com, pub-7136469099252390, DIRECT, f08c47fec0942fa0",
+  "footer_contact_html": "<li>Email: <a href=\"mailto:contact@trithucworld.com\">contact@trithucworld.com</a></li>\n<li>Hotline: <a href=\"tel:0964074043\">0964 074 043</a></li>\n<li>Zalo: <a href=\"https://zalo.me/0964074043\">Quang Huy</a></li>\n<li>Địa chỉ: Rinky Home, 280/7 Trưng Nữ Vương, Đà Nẵng, Việt Nam</li>",
   "google_analytics_code": "<script async src=\"https://www.googletagmanager.com/gtag/js?id=G-BC2VN9KZKX\"></script>\n<script>\n  window.dataLayer = window.dataLayer || [];\n  function gtag(){dataLayer.push(arguments);}\n  gtag('js', new Date());\n\n  gtag('config', 'G-BC2VN9KZKX');\n</script>",
   "next_category_id": 8
 }
