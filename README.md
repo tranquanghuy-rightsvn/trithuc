@@ -190,6 +190,21 @@ lan lien tiep cho ket qua idempotent (khong tu sinh diff).
    **revoke cac token do va tao token moi rieng cho GAS** (luu trong Script Properties, khong
    commit vao bat ky repo nao).
 
+## UX: spinner loading + confirm truoc khi xoa
+
+Moi nut trong `gas/app.html` goi mot thao tac bat dong bo (Luu/Xoa/Dang nhap/Mo bai de sua...)
+deu di qua 2 helper trong `gas/js.html`:
+
+- `gasCall(name, ...args)` — boc `google.script.run` thanh Promise.
+- `withLoading(btn, promise)` — disable nut + hien vong xoay (`class="is-loading"`, xem
+  `css.html`) NGAY LUC GOI (dong bo, truoc khi cho ket qua), tranh nguoi dung bam nhieu lan
+  trong luc dang xu ly; tu phuc hoi nut khi xong (ca thanh cong lan loi).
+
+Moi nut trong HTML truyen chinh no vao qua `this` (vd `onclick="savePostClick(this)"`); cac
+nut sinh ra trong bang (danh sach bai/danh muc/trang/user) cung truyen `this` tuong tu trong
+chuoi HTML dung `.map()`. **Xoa** (bai viet/danh muc/trang/user) da co san `confirm()` truoc
+khi goi server, giu nguyen — chi them spinner cho phan goi server sau khi da confirm.
+
 ## Chua lam (co the them sau, tham khao `gas-backend-patterns.md` muc 9)
 
 De giu pham vi ban dau gon, `gas/js.html` **chua** cai dat cac toi uu toc do CMS (boot-once
