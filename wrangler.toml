@@ -7,3 +7,11 @@ compatibility_date = "2026-08-21"
 
 [assets]
 directory = "./html"
+# QUAN TRONG - giu nguyen URL co duoi .html (SEO da index tu lau, KHONG duoc doi):
+# mac dinh Workers Static Assets dung html_handling = "auto-trailing-slash", se TU DONG
+# redirect "/bai-viet.html" -> "/bai-viet" (bo duoi .html) - dung "none" de tat han vi
+# nay, serve dung nguyen path nhu file that (giong het cach Vercel/Flask ban goc dang lam).
+html_handling = "none"
+# Site nhieu trang tinh (khong phai SPA) - khong muon fallback ve index.html cho URL la,
+# tra 404 that thay vi am tham serve trang chu (tranh Google index nham noi dung trung).
+not_found_handling = "none"
