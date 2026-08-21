@@ -8,3 +8,10 @@
 
 /index.html / 301
 /trang-nguyen-thoi-xua.html /lich-su-van-hoa/trang-nguyen-thoi-xua.html 301
+
+# "/admin" (khong duoi .html) -> trang trung gian chuyen sang GAS CMS (xem build.py
+# build_admin_redirect()). CO Y KHONG khai bao Disallow: /admin trong robots.txt - user yeu
+# cau khong muon "quang cao" duong dan admin trong 1 file cong khai ai cung doc duoc; chi
+# dua vao meta robots noindex tren chinh html/admin.html (1 lop, khong phai 2 lop nhu
+# static-site-build.md muc 6 khuyen nghi mac dinh - deviation co chu dich, xem README.md).
+/admin /admin.html 200

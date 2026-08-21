@@ -530,6 +530,35 @@ def build_sitemap(posts, pages, website):
     print("built html/sitemap.xml (%d bai, %d trang, %d danh muc)" % (len(posts), len(pages), len(website.get("categories", []))))
 
 
+# URL /exec cua ban GAS CMS dang deploy - trang thai deploy dung (Edit deployment > New
+# version, KHONG phai New deployment) thi URL nay KHONG doi giua cac lan sua code, xem
+# gas-backend-patterns.md gotcha #4. Doi gia tri nay neu deploy lai theo kieu tao moi.
+ADMIN_GAS_URL = "https://script.google.com/macros/s/AKfycbxpjODuWjsExv6w0L5BPdZsZVwifmYpBRUKlHTSIRY5ERyu6sovAC3OiDJoZzPrD-5U/exec"
+
+
+def build_admin_redirect():
+    """html/admin.html - trang trung gian chuyen huong sang GAS CMS, de nho URL ngan gon
+    "/admin" thay vi URL /exec dai. KHONG duoc de bot index/theo doi - 2 lop bao ve (xem
+    static-site-build.md muc 6): meta robots noindex TREN CHINH TRANG NAY, VA Disallow
+    trong robots.txt (them tay, xem README.md) - thieu 1 trong 2 la khong du."""
+    html = """<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta http-equiv="refresh" content="0; url=%(url)s">
+<title>Đang chuyển đến trang quản trị...</title>
+</head>
+<body>
+<script>location.replace(%(url_js)s);</script>
+<p>Đang chuyển đến trang quản trị... Nếu không tự chuyển, <a href="%(url)s">bấm vào đây</a>.</p>
+</body>
+</html>
+""" % {"url": ADMIN_GAS_URL, "url_js": json.dumps(ADMIN_GAS_URL)}
+    (HTML / "admin.html").write_text(html, encoding="utf-8")
+    print("built html/admin.html (redirect -> GAS CMS)")
+
+
 def category_pills(categories):
     return "\n".join(
         '          <a class="notfound-pill" href="./%s">%s</a>' % (c["url"], esc(c["name"]))
@@ -590,8 +619,27 @@ def main():
 
     build_homepage(posts, pages_sorted, website)
     build_404_page(pages_sorted, website)
+    build_admin_redirect()
     build_sitemap(posts, pages_sorted, website)
-    print("Done: %d bai, %d trang, %d danh muc" % (len(posts), len(pages_sorted), len(website.get("categories", []))))
+
+    # Don file .html mo coi o goc html/ - bai/trang/danh muc DA BI XOA khoi data/ van con
+    # nguyen file cu tren site that neu khong lam buoc nay (bug that da gap: xoa bai qua
+    # CMS xong, file .html cu van truy cap duoc, Google van co the con index). build.py xua
+    # nay chi TAO/GHI DE, chua bao gio XOA - chi file nao KHONG con nam trong "bo nho" cac
+    # URL hop le (tinh lai moi lan build) thi moi xoa, tranh dung nham file tinh khac.
+    expected = {"index.html", "404.html", "admin.html"}
+    expected.update(p["url"] for p in posts)
+    expected.update(p["url"] for p in pages_sorted)
+    expected.update(c["url"] for c in website.get("categories", []))
+    removed = 0
+    for f in HTML.glob("*.html"):
+        if f.name not in expected:
+            f.unlink()
+            removed += 1
+            print("removed mo coi: html/%s" % f.name)
+
+    print("Done: %d bai, %d trang, %d danh muc, %d file mo coi da xoa"
+          % (len(posts), len(pages_sorted), len(website.get("categories", [])), removed))
 
 
 if __name__ == "__main__":
