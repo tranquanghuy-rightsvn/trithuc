@@ -68,6 +68,11 @@ Xuat `image/webp` qua `canvas.toBlob`/`toDataURL` — can trinh duyet ho tro web
    khong gioi han (xem skill `hosting-and-quotas.md`). `html/vercel.json` → `html/_redirects`.
 4. **CI trigger dung 3 file la commit-chot** (`data/posts.json`, `data/pages.json`,
    `data/website.json`) thay vi ca thu muc `data/**` — tranh build o trang thai do dang.
+5. **`ads.txt` quan ly duoc qua CMS** (field `website.ads_txt`, tab Cai dat website trong
+   `gas/app.html`) — ban goc la 1 file tinh copy tay 1 lan, khong doi duoc qua CMS. Luu y:
+   `saveWebsite()` trong `Code.js` **chi ghi `html/ads.txt` khi field co noi dung** — de
+   trong thi KHONG tao file va KHONG dong bo (khong tu xoa file da co san neu ban xoa
+   trong field roi Luu — muon go han thi xoa file tren GitHub bang tay).
 
 ## Quirk ke thua tu ban goc (CO CHU DICH giu nguyen, khong tu sua, vi user yeu cau match hoan toan)
 

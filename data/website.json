@@ -46,6 +46,7 @@
   "logo": "html/images/logo.png",
   "thumbnail": "html/images/thumb.webp",
   "lang": "vi",
+  "ads_txt": "google.com, pub-7136469099252390, DIRECT, f08c47fec0942fa0",
   "google_analytics_code": "<script async src=\"https://www.googletagmanager.com/gtag/js?id=G-BC2VN9KZKX\"></script>\n<script>\n  window.dataLayer = window.dataLayer || [];\n  function gtag(){dataLayer.push(arguments);}\n  gtag('js', new Date());\n\n  gtag('config', 'G-BC2VN9KZKX');\n</script>",
   "next_category_id": 8
 }
