@@ -537,10 +537,12 @@ ADMIN_GAS_URL = "https://script.google.com/macros/s/AKfycbxpjODuWjsExv6w0L5BPdZs
 
 
 def build_admin_redirect():
-    """html/admin.html - trang trung gian chuyen huong sang GAS CMS, de nho URL ngan gon
-    "/admin" thay vi URL /exec dai. KHONG duoc de bot index/theo doi - 2 lop bao ve (xem
-    static-site-build.md muc 6): meta robots noindex TREN CHINH TRANG NAY, VA Disallow
-    trong robots.txt (them tay, xem README.md) - thieu 1 trong 2 la khong du."""
+    """html/admin/index.html - trang trung gian chuyen huong sang GAS CMS, de nho URL ngan
+    gon "/admin" (khong duoi .html) thay vi URL /exec dai. Dat trong thu muc rieng
+    (admin/index.html) thay vi file phang (admin.html) theo yeu cau user - _redirects van
+    phai khai bao rewrite vi wrangler.toml html_handling=none tat tu dong resolve
+    "/admin" -> "admin/index.html". KHONG duoc de bot index/theo doi - meta robots noindex
+    TREN CHINH TRANG NAY; CO Y KHONG ghi Disallow trong robots.txt (xem README.md)."""
     html = """<!DOCTYPE html>
 <html lang="vi">
 <head>
@@ -555,8 +557,13 @@ def build_admin_redirect():
 </body>
 </html>
 """ % {"url": ADMIN_GAS_URL, "url_js": json.dumps(ADMIN_GAS_URL)}
-    (HTML / "admin.html").write_text(html, encoding="utf-8")
-    print("built html/admin.html (redirect -> GAS CMS)")
+    admin_dir = HTML / "admin"
+    admin_dir.mkdir(parents=True, exist_ok=True)
+    (admin_dir / "index.html").write_text(html, encoding="utf-8")
+    old_flat = HTML / "admin.html"
+    if old_flat.exists():
+        old_flat.unlink()
+    print("built html/admin/index.html (redirect -> GAS CMS)")
 
 
 def category_pills(categories):
@@ -627,7 +634,7 @@ def main():
     # CMS xong, file .html cu van truy cap duoc, Google van co the con index). build.py xua
     # nay chi TAO/GHI DE, chua bao gio XOA - chi file nao KHONG con nam trong "bo nho" cac
     # URL hop le (tinh lai moi lan build) thi moi xoa, tranh dung nham file tinh khac.
-    expected = {"index.html", "404.html", "admin.html"}
+    expected = {"index.html", "404.html"}
     expected.update(p["url"] for p in posts)
     expected.update(p["url"] for p in pages_sorted)
     expected.update(c["url"] for c in website.get("categories", []))

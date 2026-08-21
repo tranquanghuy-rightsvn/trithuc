@@ -10,8 +10,11 @@
 /trang-nguyen-thoi-xua.html /lich-su-van-hoa/trang-nguyen-thoi-xua.html 301
 
 # "/admin" (khong duoi .html) -> trang trung gian chuyen sang GAS CMS (xem build.py
-# build_admin_redirect()). CO Y KHONG khai bao Disallow: /admin trong robots.txt - user yeu
-# cau khong muon "quang cao" duong dan admin trong 1 file cong khai ai cung doc duoc; chi
-# dua vao meta robots noindex tren chinh html/admin.html (1 lop, khong phai 2 lop nhu
-# static-site-build.md muc 6 khuyen nghi mac dinh - deviation co chu dich, xem README.md).
-/admin /admin.html 200
+# build_admin_redirect()). File that nam o html/admin/index.html (thu muc rieng, khong phai
+# file phang) - van phai khai bao rewrite vi wrangler.toml html_handling=none tat tu dong
+# resolve thu muc/index.html. CO Y KHONG khai bao Disallow: /admin trong robots.txt - user
+# yeu cau khong muon "quang cao" duong dan admin trong 1 file cong khai ai cung doc duoc;
+# chi dua vao meta robots noindex tren chinh html/admin/index.html (1 lop, khong phai 2 lop
+# nhu static-site-build.md muc 6 khuyen nghi mac dinh - deviation co chu dich, xem README.md).
+/admin /admin/index.html 200
+/admin/ /admin/index.html 200

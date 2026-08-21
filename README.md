@@ -254,16 +254,19 @@ GAS chay trong iframe co the giu cache HTML/JS cu.
 
 ## Redirect "/admin" sang GAS CMS + don file mo coi
 
-`scripts/build.py` gio co `build_admin_redirect()` sinh `html/admin.html` — trang trung gian
-tu dong chuyen huong (`meta refresh` + `location.replace()`, du phong ca 2) sang URL `/exec`
-that su cua GAS CMS (hang sang trong `ADMIN_GAS_URL`, doi khi deploy lai tao URL moi — xem
-`gas-backend-patterns.md` gotcha #4). `html/_redirects` co rewrite `/admin -> /admin.html`
-(200) de dung duoc URL ngan `/admin` (khong duoi `.html`) do `wrangler.toml` da tat
-`html_handling`.
+`scripts/build.py` gio co `build_admin_redirect()` sinh `html/admin/index.html` (thu muc
+rieng, KHONG phai file phang `admin.html` — doi lai theo yeu cau user de URL sach hon) —
+trang trung gian tu dong chuyen huong (`meta refresh` + `location.replace()`, du phong ca 2)
+sang URL `/exec` that su cua GAS CMS (hang sang trong `ADMIN_GAS_URL`, doi khi deploy lai tao
+URL moi — xem `gas-backend-patterns.md` gotcha #4). `html/_redirects` co rewrite
+`/admin -> /admin/index.html` va `/admin/ -> /admin/index.html` (200) de dung duoc URL ngan
+`/admin` (khong duoi `.html`, khong can go `/admin/index.html`) — van BAT BUOC phai khai bao
+rewrite nay du file nam trong thu muc con, vi `wrangler.toml` da tat `html_handling` nen
+Cloudflare khong tu dong resolve thu muc → `index.html`.
 
 **Chi 1 lop chan bot (CO CHU DICH, khac khuyen nghi 2 lop mac dinh cua
 `static-site-build.md` muc 6)**: chi dua vao `<meta name="robots" content="noindex,
-nofollow, noarchive, nosnippet">` tren chinh `admin.html` — **KHONG** them
+nofollow, noarchive, nosnippet">` tren chinh `admin/index.html` — **KHONG** them
 `Disallow: /admin` vao `robots.txt` theo yeu cau ro rang cua user, vi `robots.txt` la file
 **cong khai** ai cung doc duoc — khai bao `Disallow: /admin` vo tinh "quang cao" chinh xac
 duong dan trang quan tri cho bat ky ai (ke ca bot xau khong tuan thu robots.txt) xem file do.
@@ -271,9 +274,10 @@ duong dan trang quan tri cho bat ky ai (ke ca bot xau khong tuan thu robots.txt)
 **Don file .html mo coi** (bug that da gap): xoa 1 bai/trang/danh muc qua CMS chi xoa
 `data/`, KHONG tung xoa file `.html` da build san — nen bai da xoa van truy cap duoc tren
 site that vo thoi han. `main()` trong `build.py` gio tinh lai tap hop URL hop le SAU MOI lan
-build (posts + pages + categories + `index.html`/`404.html`/`admin.html`), roi xoa moi file
-`.html` o goc `html/` khong nam trong tap do. Da kiem tra idempotent (chay 2 lan lien tiep
-khong tu xoa/sinh them gi).
+build (posts + pages + categories + `index.html`/`404.html`), roi xoa moi file `.html` o goc
+`html/` khong nam trong tap do — chi quet top-level (`HTML.glob("*.html")`, khong de quy) nen
+khong dung cham/xoa nham `html/admin/index.html` nam trong thu muc con. Da kiem tra idempotent
+(chay 2 lan lien tiep khong tu xoa/sinh them gi).
 
 ## Chua lam (co the them sau, tham khao `gas-backend-patterns.md` muc 9)
 
