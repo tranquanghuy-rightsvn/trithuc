@@ -38,11 +38,6 @@
       "id": 7,
       "name": "Khám phá",
       "url": "kham-pha.html"
-    },
-    {
-      "id": 8,
-      "name": "Test danh mục",
-      "url": "test-danh-muc.html"
     }
   ],
   "template": "default",
