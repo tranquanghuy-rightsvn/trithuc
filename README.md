@@ -73,6 +73,18 @@ Xuat `image/webp` qua `canvas.toBlob`/`toDataURL` — can trinh duyet ho tro web
    `saveWebsite()` trong `Code.js` **chi ghi `html/ads.txt` khi field co noi dung** — de
    trong thi KHONG tao file va KHONG dong bo (khong tu xoa file da co san neu ban xoa
    trong field roi Luu — muon go han thi xoa file tren GitHub bang tay).
+6. **Them cap quyen `admin`** (ban goc/skill mac dinh chi co `root`/`editor`/`viewer`):
+   `root` > `admin` > `editor` > `viewer` (`ROLE_RANK` trong `Code.js`). `root` **chi** set
+   bang sua tay Sheet `Users` (khong bao gio qua CMS, ke ca voi tai khoan admin — xem
+   `CMS_MANAGEABLE_ROLES`). `admin` quan ly duoc tai khoan `editor`/`viewer` qua tab
+   **"Quan ly nguoi dung"** (`listUsersForAdmin`/`saveUser`/`deleteUser`) va thay/sua duoc
+   **"Cai dat website"**; `editor` sua noi dung (bai viet/danh muc/trang tinh) nhung
+   **khong** thay tab Cai dat website hay Quan ly nguoi dung (an o client trong
+   `bootApp()`, VA chan o server bang `requireRole_(token, "admin")` — khong chi dua vao an
+   giao dien). Mục "Đăng xuất" đã bị bỏ khỏi sidebar theo yêu cầu — token vẫn sống 30 ngày
+   trong `localStorage`, muốn đăng xuất tạm thời thì tự xóa key
+   `trithucworld_cms_token` trong DevTools, hoặc yêu cầu thêm lại nút này nếu cần dùng
+   trên máy dùng chung.
 
 ## Quirk ke thua tu ban goc (CO CHU DICH giu nguyen, khong tu sua, vi user yeu cau match hoan toan)
 
