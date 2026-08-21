@@ -141,6 +141,15 @@ lan lien tiep cho ket qua idempotent (khong tu sinh diff).
 - [x] **Copy anh bai viet cu**: `../html/images/posts/**` → `remake/html/images/posts/**`
       — da copy (80MB, 1138 file), da rebuild va commit cung repo.
 - [ ] Doi cac GitHub token bi lo (xem canh bao duoi) truoc khi push repo len GitHub that.
+- [ ] **`images/thumb.webp` (OG mac dinh trang chu/category) chua ton tai** — file nay CHUA
+      TUNG duoc tao ke ca o ban goc (khong phai loi phat sinh trong qua trinh remake). Upload
+      qua tab Cai dat website (truong "Thumbnail site", crop cung 720x480) sau khi CMS chay
+      that.
+- [ ] **Bai "Lich su Kim Tu Thap" (id 72) hoan toan khong co anh** (3 thumbnail + 3 anh
+      content) o bat ky dau — da kiem tra ca `trithucworld.com` (404 ca trang bai viet) nen
+      day la bai nhap/draft chua tung publish that su, khong phai du lieu bi mat trong luc
+      remake. Can: xoa bai nay di roi tao lai qua CMS moi (co anh), hoac tu upload anh bu
+      vao qua CMS neu muon giu nguyen bai.
 
 ## ⚠️ Canh bao quan trong tu qua trinh lam viec nay
 
