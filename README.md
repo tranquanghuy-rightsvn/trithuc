@@ -254,15 +254,18 @@ GAS chay trong iframe co the giu cache HTML/JS cu.
 
 ## Redirect "/admin" sang GAS CMS + don file mo coi
 
-`scripts/build.py` gio co `build_admin_redirect()` sinh `html/admin/index.html` (thu muc
-rieng, KHONG phai file phang `admin.html` — doi lai theo yeu cau user de URL sach hon) —
-trang trung gian tu dong chuyen huong (`meta refresh` + `location.replace()`, du phong ca 2)
-sang URL `/exec` that su cua GAS CMS (hang sang trong `ADMIN_GAS_URL`, doi khi deploy lai tao
-URL moi — xem `gas-backend-patterns.md` gotcha #4). `html/_redirects` co rewrite
-`/admin -> /admin/index.html` va `/admin/ -> /admin/index.html` (200) de dung duoc URL ngan
-`/admin` (khong duoi `.html`, khong can go `/admin/index.html`) — van BAT BUOC phai khai bao
-rewrite nay du file nam trong thu muc con, vi `wrangler.toml` da tat `html_handling` nen
-Cloudflare khong tu dong resolve thu muc → `index.html`.
+`html/admin/index.html` la trang trung gian tu dong chuyen huong (`meta refresh` +
+`location.replace()`, du phong ca 2) sang URL `/exec` that su cua GAS CMS. Day la **file
+tinh commit thang vao repo, KHONG do `build.py` sinh ra** — luc dau lam theo huong build.py
+tu dong sinh (giong moi file khac trong `html/`), nhung noi dung trang nay gan nhu khong bao
+gio doi (chi doi khi deploy GAS kieu "New deployment" tao URL `/exec` moi, von da hiem va
+luon can sua tay du theo huong nao), nen de build.py tu dong sinh lai moi lan build la thua
+- don gian hoa bang cach coi no nhu 1 file tinh binh thuong, muon doi URL GAS moi thi sua
+truc tiep file nay (xem `gas-backend-patterns.md` gotcha #4 ve tinh on dinh cua URL /exec).
+`html/_redirects` co rewrite `/admin -> /admin/index.html` va `/admin/ -> /admin/index.html`
+(200) de dung duoc URL ngan `/admin` (khong duoi `.html`, khong can go `/admin/index.html`)
+- van BAT BUOC phai khai bao rewrite nay du file nam trong thu muc con, vi `wrangler.toml`
+da tat `html_handling` nen Cloudflare khong tu dong resolve thu muc → `index.html`.
 
 **Chi 1 lop chan bot (CO CHU DICH, khac khuyen nghi 2 lop mac dinh cua
 `static-site-build.md` muc 6)**: chi dua vao `<meta name="robots" content="noindex,

@@ -530,42 +530,6 @@ def build_sitemap(posts, pages, website):
     print("built html/sitemap.xml (%d bai, %d trang, %d danh muc)" % (len(posts), len(pages), len(website.get("categories", []))))
 
 
-# URL /exec cua ban GAS CMS dang deploy - trang thai deploy dung (Edit deployment > New
-# version, KHONG phai New deployment) thi URL nay KHONG doi giua cac lan sua code, xem
-# gas-backend-patterns.md gotcha #4. Doi gia tri nay neu deploy lai theo kieu tao moi.
-ADMIN_GAS_URL = "https://script.google.com/macros/s/AKfycbxpjODuWjsExv6w0L5BPdZsZVwifmYpBRUKlHTSIRY5ERyu6sovAC3OiDJoZzPrD-5U/exec"
-
-
-def build_admin_redirect():
-    """html/admin/index.html - trang trung gian chuyen huong sang GAS CMS, de nho URL ngan
-    gon "/admin" (khong duoi .html) thay vi URL /exec dai. Dat trong thu muc rieng
-    (admin/index.html) thay vi file phang (admin.html) theo yeu cau user - _redirects van
-    phai khai bao rewrite vi wrangler.toml html_handling=none tat tu dong resolve
-    "/admin" -> "admin/index.html". KHONG duoc de bot index/theo doi - meta robots noindex
-    TREN CHINH TRANG NAY; CO Y KHONG ghi Disallow trong robots.txt (xem README.md)."""
-    html = """<!DOCTYPE html>
-<html lang="vi">
-<head>
-<meta charset="utf-8">
-<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
-<meta http-equiv="refresh" content="0; url=%(url)s">
-<title>Đang chuyển đến trang quản trị...</title>
-</head>
-<body>
-<script>location.replace(%(url_js)s);</script>
-<p>Đang chuyển đến trang quản trị... Nếu không tự chuyển, <a href="%(url)s">bấm vào đây</a>.</p>
-</body>
-</html>
-""" % {"url": ADMIN_GAS_URL, "url_js": json.dumps(ADMIN_GAS_URL)}
-    admin_dir = HTML / "admin"
-    admin_dir.mkdir(parents=True, exist_ok=True)
-    (admin_dir / "index.html").write_text(html, encoding="utf-8")
-    old_flat = HTML / "admin.html"
-    if old_flat.exists():
-        old_flat.unlink()
-    print("built html/admin/index.html (redirect -> GAS CMS)")
-
-
 def category_pills(categories):
     return "\n".join(
         '          <a class="notfound-pill" href="./%s">%s</a>' % (c["url"], esc(c["name"]))
@@ -626,7 +590,6 @@ def main():
 
     build_homepage(posts, pages_sorted, website)
     build_404_page(pages_sorted, website)
-    build_admin_redirect()
     build_sitemap(posts, pages_sorted, website)
 
     # Don file .html mo coi o goc html/ - bai/trang/danh muc DA BI XOA khoi data/ van con
