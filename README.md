@@ -113,18 +113,17 @@ lan lien tiep cho ket qua idempotent (khong tu sinh diff).
       Secrets → Actions.
 - [ ] Chay `python3 scripts/migrate_from_flask_cms.py` (tu thu muc goc du an, canh `html/`
       cu) de co du lieu that trong `remake/data/`, roi push repo nay len GitHub lan dau.
-- [ ] **Copy anh bai viet cu**: `../html/images/posts/**` → `remake/html/images/posts/**`
-      (chua copy san trong lan dung nay vi may dang **rat it dung dia trong — xem canh bao
-      duoi**; tu chay `cp -R` khi da co du dung luong, hoac lam truc tiep tren CI/server).
+- [x] **Copy anh bai viet cu**: `../html/images/posts/**` → `remake/html/images/posts/**`
+      — da copy (80MB, 1138 file), da rebuild va commit cung repo.
 - [ ] Doi cac GitHub token bi lo (xem canh bao duoi) truoc khi push repo len GitHub that.
 
 ## ⚠️ Canh bao quan trong tu qua trinh lam viec nay
 
-1. **May dang gan het dung luong o (~150MB trong khi ⇢ dia 228GB, tuc 100% da dung).**
-   Trong luc lam, mot lenh `cp -R` copy anh bai viet (80MB) da lam ho `ENOSPC` toan bo, phai
-   don don ngay. Da xoa phan copy do khoi `remake/html/images/posts/` de tra lai dung luong,
-   nen thu muc nay dang **rong** — can don dep dia (Desktop/Downloads/Trash...) truoc khi
-   copy lai anh that.
+1. **May tung gan het dung luong o** (~150MB/228GB, tuc 100% da dung) — luc do 1 lenh
+   `cp -R` copy anh bai viet (80MB) da lam ho `ENOSPC` toan bo, phai don ngay va tam bo
+   qua buoc copy anh. **Cap nhat**: dia da co du cho tro lai (~1.6GB free), da copy lai
+   thanh cong toan bo `../html/images/posts/**` (80MB, 1138 file) vao
+   `remake/html/images/posts/` va commit. Van nen theo doi dung luong o dinh ky.
 2. **Repo goc (`trithucworld/`) dang chua nhieu GitHub Personal Access Token o dang plaintext**
    trong `setup.json`, `task.xml`, `git-credentials.txt`, va comment trong `mygit.py` — da
    bao o luot trao doi truoc, nhac lai vi day la luc chuan bi push code len GitHub that:

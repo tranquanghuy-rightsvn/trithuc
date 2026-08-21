@@ -50,4 +50,4 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy html --project-name=trithucworld --branch=main
+          command: pages deploy html --project-name=trithucworld --branch=${{ github.ref_name }}
