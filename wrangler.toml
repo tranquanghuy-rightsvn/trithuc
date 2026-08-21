@@ -1,0 +1,9 @@
+# Cau hinh Cloudflare Worker (Static Assets) cho TrithucWorld - thay the Cloudflare Pages
+# (Cloudflare hien gop Pages vao chung mo hinh Workers, khong con luong tao "Pages" rieng
+# tren dashboard). Site 100% tinh, khong can Worker script (main) - chi serve thang file
+# trong html/. `_redirects`/`_headers` trong html/ van hoat dong dung quy uoc cu cua Pages.
+name = "trithuc"
+compatibility_date = "2026-08-21"
+
+[assets]
+directory = "./html"

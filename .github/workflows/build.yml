@@ -40,14 +40,14 @@ jobs:
           git diff --cached --quiet && echo "Khong co thay doi de commit" || git commit -m "CI: build html from data"
           git push
 
-      # Day thang len Cloudflare Pages bang wrangler (direct upload) - KHONG qua co che
-      # "git-connected build" cua Cloudflare, nen khong tinh vao quota 500 build/thang
-      # (xem hosting-and-quotas.md). Can 2 secret trong repo Settings > Secrets:
-      #   CLOUDFLARE_API_TOKEN, CLOUDFLARE_ACCOUNT_ID
-      # va sua "trithucworld" ben duoi thanh dung ten Cloudflare Pages project cua ban.
-      - name: Deploy len Cloudflare Pages
+      # Day thang len Cloudflare (Workers + Static Assets - Cloudflare da gop "Pages" vao
+      # chung mo hinh Workers, khong con luong tao Pages rieng tren dashboard nua). Cau hinh
+      # o wrangler.toml (name = "trithuc", assets.directory = "./html"). Can 2 secret trong
+      # repo Settings > Secrets: CLOUDFLARE_API_TOKEN (quyen Account > Workers Scripts >
+      # Edit), CLOUDFLARE_ACCOUNT_ID.
+      - name: Deploy len Cloudflare (Workers Static Assets)
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy html --project-name=trithucworld --branch=${{ github.ref_name }}
+          command: deploy

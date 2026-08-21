@@ -1,4 +1,4 @@
-# TrithucWorld — remake sang GAS + Sheets + Drive + GitHub + Cloudflare Pages
+# TrithucWorld — remake sang GAS + Sheets + Drive + GitHub + Cloudflare Workers (Static Assets)
 
 Ban thay the cho CMS Flask/pywebview goc (`main.py`, `myapi.py`, `model.py`, `myrender.py`,
 `mygit.py`, `templates/default/*.html`) trong thu muc cha. Kien truc va cac quyet dinh o day
@@ -21,7 +21,7 @@ GitHub Actions (.github/workflows/build.yml): scripts/build.py
 commit "CI: build html from data" → push
    │
    ▼
-Cloudflare Pages (wrangler direct upload trong CI, khong qua git-build cua CF)
+Cloudflare Workers + Static Assets (wrangler deploy trong CI - xem wrangler.toml)
 ```
 
 ## Cau truc thu muc
@@ -40,7 +40,9 @@ Cloudflare Pages (wrangler direct upload trong CI, khong qua git-build cua CF)
 - `gas/` — code Google Apps Script (deploy bang `clasp push`, KHONG qua git — xem
   `.gitignore`). Sau MOI lan sua file trong `gas/`, phai tu liet ke ro file nao doi +
   nhac `clasp push` + Deploy → **New version** (khong phai New deployment, se sinh URL moi).
-- `.github/workflows/build.yml` — CI build + deploy Cloudflare Pages.
+- `.github/workflows/build.yml` — CI build + deploy Cloudflare (Workers Static Assets).
+- `wrangler.toml` — cau hinh Cloudflare Worker (`name`, `assets.directory`) — doi ten Worker
+  o day (kem sua `name` cho khop) neu can, khong sua trong `build.yml`.
 
 ## Quy tac anh (giu dung Pillow goc, lam lai bang `<canvas>` o `gas/js.html`)
 
@@ -63,9 +65,12 @@ Xuat `image/webp` qua `canvas.toBlob`/`toDataURL` — can trinh duyet ho tro web
    giua se renumber toan bo id con lai, lam bai viet cua cac category sau bi gan nham. Sua:
    id cap phat tang dan, khong tai su dung; `deleteCategory` chan xoa neu con bai viet dung
    category do (`Code.js`).
-3. **Cloudflare Pages thay Vercel**, deploy qua `wrangler pages deploy` trong GitHub Actions
-   (khong qua git-integration build cua Cloudflare) — free, cho phep thuong mai, bandwidth
-   khong gioi han (xem skill `hosting-and-quotas.md`). `html/vercel.json` → `html/_redirects`.
+3. **Cloudflare (Workers + Static Assets) thay Vercel**, deploy qua `wrangler deploy` trong
+   GitHub Actions (cau hinh `wrangler.toml` o repo root) — free, cho phep thuong mai,
+   bandwidth khong gioi han (xem skill `hosting-and-quotas.md`, luu y skill mo ta "Cloudflare
+   Pages" nhung Cloudflare da gop san pham nay vao chung Workers, khong con luong tao rieng
+   "Pages" tren dashboard nua). `html/vercel.json` → `html/_redirects` (van dung dung quy
+   uoc voi Workers Static Assets).
 4. **CI trigger dung 3 file la commit-chot** (`data/posts.json`, `data/pages.json`,
    `data/website.json`) thay vi ca thu muc `data/**` — tranh build o trang thai do dang.
 5. **`ads.txt` quan ly duoc qua CMS** (field `website.ads_txt`, tab Cai dat website trong
@@ -125,9 +130,12 @@ lan lien tiep cho ket qua idempotent (khong tu sinh diff).
       `GITHUB_OWNER`, `GITHUB_REPO`, `GITHUB_BRANCH`.
 - [ ] `clasp push` thu muc `gas/`, Deploy → **New deployment** (lan dau), sau la
       **New version** cho moi lan sua.
-- [ ] Tao Cloudflare Pages project (ten khop `--project-name` trong `build.yml`), lay
-      `CLOUDFLARE_API_TOKEN` + `CLOUDFLARE_ACCOUNT_ID`, dien vao GitHub repo → Settings →
-      Secrets → Actions.
+- [x] Tao Cloudflare Worker ten `trithuc` (khop `name` trong `wrangler.toml`) — Cloudflare
+      hien khong con luong tao "Pages" rieng, moi thu deu la Workers (co the co Static
+      Assets). Tao `CLOUDFLARE_API_TOKEN` voi quyen **Account > Workers Scripts > Edit**
+      (KHONG phai "Cloudflare Pages > Edit" — quyen do danh cho model Pages cu, se khong
+      deploy duoc Worker) + lay `CLOUDFLARE_ACCOUNT_ID`, dien vao GitHub repo → Settings →
+      Secrets and variables → Actions.
 - [ ] Chay `python3 scripts/migrate_from_flask_cms.py` (tu thu muc goc du an, canh `html/`
       cu) de co du lieu that trong `remake/data/`, roi push repo nay len GitHub lan dau.
 - [x] **Copy anh bai viet cu**: `../html/images/posts/**` → `remake/html/images/posts/**`
