@@ -101,6 +101,11 @@ Xuat `image/webp` qua `canvas.toBlob`/`toDataURL` — can trinh duyet ho tro web
    template. Ghi RAW khong escape (giống `content` bai viet) vao trong `<ul>` co san, cho
    phep chen the HTML (`<a href="mailto:...">`...). `build.py` co
    `DEFAULT_FOOTER_CONTACT` khop dung noi dung cu de khong vo site neu field chua duoc set.
+8. **Them trang 404 tuy chinh** (`templates/404.html` → `html/404.html`, build boi
+   `build_404_page()`) — ban goc (Vercel) khong co trang 404 rieng. `wrangler.toml` set
+   `not_found_handling = "404-page"` de Cloudflare Workers Static Assets serve dung file
+   nay kem HTTP status 404 THAT cho moi URL khong khop (khac SPA fallback tra 200 - se
+   khien Google index nham noi dung trang chu o URL sai).
 
 ## Quirk ke thua tu ban goc (CO CHU DICH giu nguyen, khong tu sua, vi user yeu cau match hoan toan)
 

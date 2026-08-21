@@ -12,6 +12,7 @@ directory = "./html"
 # redirect "/bai-viet.html" -> "/bai-viet" (bo duoi .html) - dung "none" de tat han vi
 # nay, serve dung nguyen path nhu file that (giong het cach Vercel/Flask ban goc dang lam).
 html_handling = "none"
-# Site nhieu trang tinh (khong phai SPA) - khong muon fallback ve index.html cho URL la,
-# tra 404 that thay vi am tham serve trang chu (tranh Google index nham noi dung trung).
-not_found_handling = "none"
+# Site nhieu trang tinh (khong phai SPA) - khong muon fallback ve index.html cho URL la.
+# "404-page": serve dung html/404.html (build.py tu build) kem HTTP status 404 THAT (khac
+# SPA fallback tra 200) - tranh Google index nham noi dung trang chu o URL sai.
+not_found_handling = "404-page"

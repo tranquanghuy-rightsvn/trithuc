@@ -533,6 +533,34 @@ def build_sitemap(posts, pages, website):
     print("built html/sitemap.xml (%d bai, %d trang, %d danh muc)" % (len(posts), len(pages), len(website.get("categories", []))))
 
 
+def category_pills(categories):
+    return "\n".join(
+        '          <a class="notfound-pill" href="./%s">%s</a>' % (c["url"], esc(c["name"]))
+        for c in categories
+    )
+
+
+def build_404_page(pages, website):
+    """html/404.html - Cloudflare Workers Static Assets serve file nay cho moi URL khong
+    khop (wrangler.toml: not_found_handling = "404-page"), kem dung HTTP status 404 that
+    (khac SPA fallback 200) - xem README.md."""
+    tpl = load_template("404.html")
+    categories = website.get("categories", [])
+    html = render(tpl, {
+        "GOOGLE_ANALYTICS_CODE": website.get("google_analytics_code", ""),
+        "LANG": website.get("lang", "vi"),
+        "WEBSITE_NAME": esc(website.get("name", "")),
+        "WEBSITE_DESCRIPTION": esc(website.get("description", "")),
+        "NAV_CATEGORIES": nav_categories(categories, mobile=False),
+        "MOBILE_NAV_CATEGORIES": nav_categories(categories, mobile=True),
+        "CATEGORY_PILLS": category_pills(categories),
+        "FOOTER_PAGE_LINKS": footer_page_links(pages),
+        "FOOTER_CONTACT": footer_contact(website),
+    })
+    (HTML / "404.html").write_text(html, encoding="utf-8")
+    print("built html/404.html")
+
+
 def main():
     website = load_json(DATA / "website.json", {})
     posts_index = load_json(DATA / "posts.json", [])
@@ -564,6 +592,7 @@ def main():
         build_category_page(category, posts, pages_sorted, website)
 
     build_homepage(posts, pages_sorted, website)
+    build_404_page(pages_sorted, website)
     build_sitemap(posts, pages_sorted, website)
     print("Done: %d bai, %d trang, %d danh muc" % (len(posts), len(pages_sorted), len(website.get("categories", []))))
 
