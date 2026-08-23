@@ -48,6 +48,6 @@
   "lang": "vi",
   "ads_txt": "google.com, pub-7136469099252390, DIRECT, f08c47fec0942fa0",
   "footer_contact_html": "<ul>\n<li>Email: admin-hr<a href=\"mailto:contact@trithucworld.com\">@trithucworld.com</a></li>\n<li>Hotline: 0909946083</li>\n<li>Địa chỉ: 11 L&ecirc; Anh Xu&acirc;n, Bu&ocirc;n Ma Thuột, ĐakLak&nbsp; &nbsp;, Việt Nam</li>\n</ul>",
-  "google_analytics_code": "<script async src=\"https://www.googletagmanager.com/gtag/js?id=G-BC2VN9KZKX\"></script>\n<script>\n  window.dataLayer = window.dataLayer || [];\n  function gtag(){dataLayer.push(arguments);}\n  gtag('js', new Date());\n\n  gtag('config', 'G-BC2VN9KZKX');\n</script>",
+  "google_analytics_code": "<!-- Google tag (gtag.js) -->\n<script async src=\"https://www.googletagmanager.com/gtag/js?id=G-FFGF24MB08\"></script>\n<script>\n  window.dataLayer = window.dataLayer || [];\n  function gtag(){dataLayer.push(arguments);}\n  gtag('js', new Date());\n\n  gtag('config', 'G-FFGF24MB08');\n</script>\n",
   "next_category_id": 9
 }
